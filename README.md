@@ -3,7 +3,7 @@
   ## By EspyXCuatas
 </div>
 
-<img src: "https://imgur.com/a/g2eMdEN.png">
+<img src= "https://imgur.com/a/g2eMdEN.png">
 
 ## Colaboradores:
 1. Fernando Haro Calvo.
