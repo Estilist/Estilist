@@ -28,6 +28,8 @@
   https://www.figma.com/board/GkV0EJPJBduCqAdLomlzJp/Flujo-UX?node-id=0-1&t=8hZrYWrE8ng9TATc-1
 - Mapa de Sitio (representa las secciones y subsecciones que tendrá el proyecto):
   https://www.figma.com/board/y1SkjWzPa7GtVLhlhBMP6m/Mapa-de-sitio?node-id=0-1&t=6zSFOCujMyC93zC2-1
+- Prototipado de alta calidad:
+  https://www.figma.com/design/P0FYRUmmXO0yvRaD1HU662/Estilist?node-id=2-3&t=WFMGE05YwuGmQ3jV-1
 
 
 
