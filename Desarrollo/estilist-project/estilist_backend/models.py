@@ -1,6 +1,25 @@
 from django.db import models
 
 # Create your models here.
+
+class Usuarios(models.Model):
+    idusuario = models.AutoField(db_column='IdUsuario', primary_key=True)  # Field name made lowercase.
+    nombre = models.CharField(db_column='Nombre', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    apellidopaterno = models.CharField(db_column='ApellidoPaterno', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    apellidomaterno = models.CharField(db_column='ApellidoMaterno', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    correo = models.CharField(db_column='Correo', unique=True, max_length=100, blank=True, null=True)  # Field name made lowercase.
+    contraseñahash = models.CharField(db_column='ContraseñaHash', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    edad = models.SmallIntegerField(db_column='Edad', blank=True, null=True)  # Field name made lowercase.
+    genero = models.CharField(db_column='Genero', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    tiporostro = models.CharField(db_column='TipoRostro', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    tipocuerpo = models.CharField(db_column='TipoCuerpo', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    fecharegistro = models.DateTimeField(db_column='FechaRegistro', blank=True, null=True)  # Field name made lowercase.
+    estado = models.BooleanField(db_column='Estado', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Usuarios'
+
 class Colorimetria(models.Model):
     idcolorimetria = models.AutoField(db_column='IdColorimetria', primary_key=True)  # Field name made lowercase.
     idusuario = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='IdUsuario', blank=True, null=True)  # Field name made lowercase.
@@ -64,19 +83,6 @@ class Preferencias(models.Model):
         managed = False
         db_table = 'Preferencias'
 
-
-class Rankings(models.Model):
-    idranking = models.AutoField(db_column='IdRanking', primary_key=True)  # Field name made lowercase.
-    idusuario = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='IdUsuario', blank=True, null=True)  # Field name made lowercase.
-    idrecomendacion = models.ForeignKey('Recomendaciones', models.DO_NOTHING, db_column='IdRecomendacion', blank=True, null=True)  # Field name made lowercase.
-    ranking = models.SmallIntegerField(db_column='Ranking', blank=True, null=True, db_comment='Ranking del usuario (1-5 estrellas)')  # Field name made lowercase.
-    fecha = models.DateTimeField(db_column='Fecha', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'Rankings'
-
-
 class Recomendaciones(models.Model):
     idrecomendacion = models.AutoField(db_column='IdRecomendacion', primary_key=True)  # Field name made lowercase.
     nombre = models.CharField(db_column='Nombre', max_length=100, blank=True, null=True)  # Field name made lowercase.
@@ -90,6 +96,16 @@ class Recomendaciones(models.Model):
         managed = False
         db_table = 'Recomendaciones'
 
+class Rankings(models.Model):
+    idranking = models.AutoField(db_column='IdRanking', primary_key=True)  # Field name made lowercase.
+    idusuario = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='IdUsuario', blank=True, null=True)  # Field name made lowercase.
+    idrecomendacion = models.ForeignKey('Recomendaciones', models.DO_NOTHING, db_column='IdRecomendacion', blank=True, null=True)  # Field name made lowercase.
+    ranking = models.SmallIntegerField(db_column='Ranking', blank=True, null=True, db_comment='Ranking del usuario (1-5 estrellas)')  # Field name made lowercase.
+    fecha = models.DateTimeField(db_column='Fecha', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Rankings'
 
 class Sesiones(models.Model):
     idsesion = models.AutoField(db_column='IdSesion', primary_key=True)  # Field name made lowercase.
@@ -102,20 +118,3 @@ class Sesiones(models.Model):
         db_table = 'Sesiones'
 
 
-class Usuarios(models.Model):
-    idusuario = models.AutoField(db_column='IdUsuario', primary_key=True)  # Field name made lowercase.
-    nombre = models.CharField(db_column='Nombre', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    apellidopaterno = models.CharField(db_column='ApellidoPaterno', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    apellidomaterno = models.CharField(db_column='ApellidoMaterno', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    correo = models.CharField(db_column='Correo', unique=True, max_length=100, blank=True, null=True)  # Field name made lowercase.
-    contraseñahash = models.CharField(db_column='ContraseñaHash', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    edad = models.SmallIntegerField(db_column='Edad', blank=True, null=True)  # Field name made lowercase.
-    genero = models.CharField(db_column='Genero', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    tiporostro = models.CharField(db_column='TipoRostro', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    tipocuerpo = models.CharField(db_column='TipoCuerpo', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    fecharegistro = models.DateTimeField(db_column='FechaRegistro', blank=True, null=True)  # Field name made lowercase.
-    estado = models.BooleanField(db_column='Estado', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'Usuarios'
