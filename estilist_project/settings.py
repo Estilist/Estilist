@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'estilist.urls'
+ROOT_URLCONF = 'estilist_project.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'estilist.wsgi.application'
+WSGI_APPLICATION = 'estilist_project.wsgi.application'
 
 
 # Database
