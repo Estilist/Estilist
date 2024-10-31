@@ -4,11 +4,11 @@ from django.db import models
 
 class Usuarios(models.Model):
     idusuario = models.AutoField(db_column='IdUsuario', primary_key=True)  # Field name made lowercase.
+    idlogin = models.ForeignKey('auth.User', models.DO_NOTHING, db_column='id', blank=True, null=True)  # Field name made lowercase.
     nombre = models.CharField(db_column='Nombre', max_length=100, blank=True, null=True)  # Field name made lowercase.
     apellidopaterno = models.CharField(db_column='ApellidoPaterno', max_length=100, blank=True, null=True)  # Field name made lowercase.
     apellidomaterno = models.CharField(db_column='ApellidoMaterno', max_length=100, blank=True, null=True)  # Field name made lowercase.
     correo = models.CharField(db_column='Correo', unique=True, max_length=100, blank=True, null=True)  # Field name made lowercase.
-    contraseñahash = models.CharField(db_column='ContraseñaHash', max_length=255, blank=True, null=True)  # Field name made lowercase.
     edad = models.SmallIntegerField(db_column='Edad', blank=True, null=True)  # Field name made lowercase.
     genero = models.CharField(db_column='Genero', max_length=50, blank=True, null=True)  # Field name made lowercase.
     tiporostro = models.CharField(db_column='TipoRostro', max_length=50, blank=True, null=True)  # Field name made lowercase.
@@ -17,7 +17,7 @@ class Usuarios(models.Model):
     estado = models.BooleanField(db_column='Estado', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Usuarios'
 
 class Colorimetria(models.Model):
