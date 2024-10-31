@@ -74,7 +74,8 @@ class CreateUser(View):
             except Exception:
                 return JsonResponse({'error' : 'Error eliminar usuario personalizado no completa'}, status=500)
 
-            return HttpResponse(f'Error al crear el usuario de autenticación: {str(e)} {username}', status=400)
+            return JsonResponse({'error' : 'Error al crear un usuario'}, status=500)
+        
         
 class CrearSuperUsuario(View):
     def post(self, request):
