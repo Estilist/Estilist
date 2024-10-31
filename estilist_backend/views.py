@@ -45,12 +45,15 @@ class CreateUser(View):
                 estado=True
             )
         except Exception as e:
-            return HttpResponse(f'Error al crear el objeto Usuarios: {str(e)}', status=400)
+                        return JsonResponse({'error' : 'Error al crear el usuario personalizado'}, status=400)
+
         
         try:
             usuario_personalizado.save()
         except Exception as e:
-            return HttpResponse(f'Error al crear el usuario personalizado: {str(e)}', status=400)
+                        return JsonResponse({'error' : 'Error al guardar el usuario personalizado en la base de datos',
+                                             'causa' : 'Valores repetidos'}, status=400)
+
 
         try:
             usuario_auth = User.objects.create_user(
@@ -68,8 +71,8 @@ class CreateUser(View):
         except Exception as e:
             try:
                 usuario_personalizado.delete()  
-            except Exception as delete_exception:
-                return HttpResponse(f'Error al eliminar el usuario personalizado: {str(delete_exception)}', status=500)
+            except Exception:
+                return JsonResponse({'error' : 'Error eliminar usuario personalizado no completa'}, status=500)
 
             return HttpResponse(f'Error al crear el usuario de autenticación: {str(e)} {username}', status=400)
         
