@@ -7,6 +7,7 @@ from django.views import View
 from django.http import JsonResponse
 import json
 from django.contrib.auth.models import User as auth
+import datetime
 
 
 class UsuariosViewSet(viewsets.ModelViewSet):
@@ -31,6 +32,7 @@ class CreateUser(View):
     
         # Intenta crear el objeto de Usuarios
         try:
+            hora_actual = datetime.datetime.now()
             usuario_personalizado = Usuarios(
                 nombre=data.get('nombre'),
                 apellidopaterno=data.get('apellidopaterno'),
@@ -54,7 +56,10 @@ class CreateUser(View):
             usuario_auth = User.objects.create_user(
                 username=username,
                 password=password,
-                email=email
+                email=email,
+                last_name=data.get('apellidopaterno'),
+                first_name=data.get('nombre'),  
+                date_joined=hora_actual.isoformat()
             )
             usuario_personalizado.idlogin = usuario_auth
             usuario_personalizado.save()  
