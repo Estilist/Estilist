@@ -1,23 +1,24 @@
 from rest_framework import viewsets
 from .models import Usuarios
-from .serializers import UsuariosSerializer
+from .serializers import UsuariosSerializer, AuthUserSerialize
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.views import View
 from django.http import JsonResponse
 import json
+from django.contrib.auth.models import User as auth
 import datetime
 
-class  UsuariosViewSet(viewsets.ModelViewSet):
+
+class UsuariosViewSet(viewsets.ModelViewSet):
     queryset = Usuarios.objects.all()
     serializer_class = UsuariosSerializer
 
-from django.http import HttpResponse
-from django.views import View
-from django.contrib.auth.models import User
-from .models import Usuarios
+class AuthUserViewSet (viewsets.ModelViewSet):
+    queryset = auth.objects.all()
+    serializer_class = AuthUserSerialize
 
-class CrearUsuario(View):
+class CreateUser(View):
     def post(self, request):
         # Leer el JSON del cuerpo de la solicitud
         try:
@@ -25,9 +26,9 @@ class CrearUsuario(View):
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
-        username = data.get('username')
-        password = data.get('password')
-        email = data.get('email')
+        password = data.get('contrasena')
+        email = data.get('correo')
+        username = email
     
         # Intenta crear el objeto de Usuarios
         try:
@@ -39,9 +40,8 @@ class CrearUsuario(View):
                 correo=email,
                 edad=data.get('edad'),
                 genero=data.get('genero'),
-                tiporostro=data.get('tiporostro'),
-                tipocuerpo=data.get('tipocuerpo'),
-                fecharegistro=hora_actual.isoformat(),
+                pais=data.get('pais'),
+                fecharegistro=data.get('fecharegistro'),
                 estado=True
             )
         except Exception as e:
@@ -63,7 +63,8 @@ class CrearUsuario(View):
             )
             usuario_personalizado.idlogin = usuario_auth
             usuario_personalizado.save()  
-            return HttpResponse('Usuario creado con éxito')
+
+            return JsonResponse({'idUsuario': usuario_personalizado.idusuario}, status=201)
         except Exception as e:
             try:
                 usuario_personalizado.delete()  
