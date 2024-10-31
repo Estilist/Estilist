@@ -4,9 +4,9 @@ from .serializers import UsuariosSerializer
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.views import View
-from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
 import json
+import datetime
 
 class  UsuariosViewSet(viewsets.ModelViewSet):
     queryset = Usuarios.objects.all()
@@ -31,6 +31,7 @@ class CrearUsuario(View):
     
         # Intenta crear el objeto de Usuarios
         try:
+            hora_actual = datetime.datetime.now()
             usuario_personalizado = Usuarios(
                 nombre=data.get('nombre'),
                 apellidopaterno=data.get('apellidopaterno'),
@@ -40,7 +41,7 @@ class CrearUsuario(View):
                 genero=data.get('genero'),
                 tiporostro=data.get('tiporostro'),
                 tipocuerpo=data.get('tipocuerpo'),
-                fecharegistro=data.get('fecharegistro'),
+                fecharegistro=hora_actual.isoformat(),
                 estado=True
             )
         except Exception as e:
@@ -55,11 +56,13 @@ class CrearUsuario(View):
             usuario_auth = User.objects.create_user(
                 username=username,
                 password=password,
-                email=email
+                email=email,
+                last_name=data.get('apellidopaterno'),
+                first_name=data.get('nombre'),  
+                date_joined=hora_actual.isoformat()
             )
             usuario_personalizado.idlogin = usuario_auth
             usuario_personalizado.save()  
-
             return HttpResponse('Usuario creado con éxito')
         except Exception as e:
             try:
