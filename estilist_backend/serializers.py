@@ -11,5 +11,3 @@ class AuthUserSerialize (serializers.ModelSerializer):
     class Meta:
         model = auth
         fields = '__all__'
-
-class RegisterSerializer (serializers.)
